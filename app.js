@@ -20,7 +20,8 @@ gamePlaying = true; // State Variable - Global variable to check the status of a
 // document.querySelector('#current-' + activePlayer).innerHTML = '<strong>' + dice + '</strong>';
 // inner HTML can only be a string
 
-document.querySelector('.dice').style.display = 'none';
+document.getElementById('dice-1').style.display = 'none';
+document.getElementById('dice-2').style.display = 'none';
 
 // the .style helps us identify it as a css page
 // .display is the css property given to the class .dice
@@ -58,19 +59,39 @@ document.getElementById('score-1').textContent = '0';
  We can also write our function inside the event listner known ass the anonymous function
  But we cannot use that button function anywhere else. Displayed below */
 
+// var lastDice;
+
 document.querySelector('.btn-roll').addEventListener('click', function () {
    if (gamePlaying) {
-      var dice = Math.floor(Math.random() * 6) + 1;
+      var dice1 = Math.floor(Math.random() * 6) + 1;
+      var dice2 = Math.floor(Math.random() * 6) + 1;
 
-      var diceDOM = document.querySelector('.dice');
-      diceDOM.style.display = 'block';
-      diceDOM.src = 'dice-' + dice + '.png';
+      document.getElementById('dice-1').style.display = 'block';
+      document.getElementById('dice-2').style.display = 'block';
+      document.getElementById('dice-1').src = 'dice-' + dice1 + '.png';
+      document.getElementById('dice-2').src = 'dice-' + dice2 + '.png';
 
       var audio = new Audio('dice-audio.mp3');
       audio.play();
 
-      if (dice !== 1) {
-         roundScore += dice;
+      // if (dice === 6 && lastDice === 6) {
+      //    // Player Loses the score
+      //    scores[activePlayer] = 0;
+      //    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+
+      //    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+      //    roundScore = 0;
+      //    document.getElementById('current-0').textContent = '0';
+      //    document.getElementById('current-1').textContent = '0';
+
+      //    document.querySelector('.player-0-panel').classList.toggle('active');
+      //    document.querySelector('.player-1-panel').classList.toggle('active');
+
+      //    document.getElementById('dice-1').src = 'dice-6.png';
+      //    document.getElementById('dice-2').src = 'dice-6.png';
+      //}
+      if (dice1 !== 1 && dice2 !== 1) {
+         roundScore += (dice1 + dice2);
          document.querySelector('#current-' + activePlayer).textContent = roundScore;
       } else {
          activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
@@ -81,8 +102,10 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
          document.querySelector('.player-0-panel').classList.toggle('active');
          document.querySelector('.player-1-panel').classList.toggle('active');
 
-         diceDOM.src = 'dice-1.png';
+         document.getElementById('dice-1').src = 'dice-1.png';
+         document.getElementById('dice-2').src = 'dice-1.png';
       }
+      // lastDice = dice;
    }
 });
 
@@ -91,11 +114,20 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
       scores[activePlayer] += roundScore;
       document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
-      if (scores[activePlayer] >= 100) {
+      var input = document.querySelector('.final-score').value;
+      var winningScore;
+      if (input) {
+         winningScore = input;
+      } else {
+         winningScore = 100;
+      }
+
+      if (scores[activePlayer] >= winningScore) {
          document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
          document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
          document.querySelector('#name-' + activePlayer).textContent = 'Winner';
-         document.querySelector('.dice').style.display = 'none';
+         document.getElementById('dice-1').style.display = 'none';
+         document.getElementById('dice-2').style.display = 'none';
          gamePlaying = false;
 
          if (activePlayer === 0) {
@@ -112,7 +144,8 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
          document.querySelector('.player-0-panel').classList.toggle('active');
          document.querySelector('.player-1-panel').classList.toggle('active');
 
-         document.querySelector('.dice').style.display = 'none';
+         document.getElementById('dice-1').style.display = 'none';
+         document.getElementById('dice-2').style.display = 'none';
       }
    }
 });
@@ -131,7 +164,8 @@ document.querySelector('.btn-new').addEventListener('click', function () {
    activePlayer = 0;
    gamePlaying = true;
 
-   document.querySelector('.dice').style.display = 'none';
+   document.getElementById('dice-1').style.display = 'none';
+   document.getElementById('dice-2').style.display = 'none';
 
    document.getElementById('current-0').textContent = '0';
    document.getElementById('current-1').textContent = '0';
