@@ -203,3 +203,20 @@ i {
 	color: red;
 	font-weight: 1000;
 }
+
+.back {
+	position: fixed;
+	background: #eb4d4d;
+	color: #f7f7f7;
+	text-decoration: none;
+	padding: 10px 20px;
+	font-family: Lato;
+	font-size: 1.5rem;
+	top: 30px;
+	left: 6%;
+	transition: all 1s;
+}
+
+a:hover {
+	color: #F4AD6F;
+}
